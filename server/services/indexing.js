@@ -9,6 +9,9 @@ import { QdrantVectorStore } from '@langchain/qdrant';
 import { PuppeteerWebBaseLoader } from "@langchain/community/document_loaders/web/puppeteer";
 import { YoutubeLoader } from "@langchain/community/document_loaders/web/youtube";
 import { RecursiveCharacterTextSplitter } from "langchain/text_splitter";
+import { Document } from '@langchain/core/documents';  // Add this import
+import { TextLoader } from "langchain/document_loaders/fs/text";
+
 
 export async function indexFile(fileBuffer, fileName) {
 
@@ -31,7 +34,7 @@ export async function indexFile(fileBuffer, fileName) {
   const docsWithMeta = docs.map(doc => ({
   ...doc,
   metadata: { ...doc.metadata, fileName }
-}));
+    }));
 
   const vectorStore = await QdrantVectorStore.fromDocuments(docsWithMeta, embeddings, { 
     url: process.env.QDRANT_URL,
@@ -121,3 +124,51 @@ export async function YoutubeIndexing(url){
 
 }
 
+export async function textIndexing(text){
+
+    try {
+        // --- Step 1: Create a Document from raw text ---
+        const doc = new Document({
+            pageContent: text,
+            metadata: {
+                source: 'text-input',
+                type: 'text'
+            }
+        });
+
+        // --- Step 2: Chunk the document ---
+        const textSplitter = new RecursiveCharacterTextSplitter({
+            chunkSize: 1000,
+            chunkOverlap: 200,
+        });
+        const chunks = await textSplitter.splitDocuments([doc]);
+        console.log(`${chunks.length} chunks created.`);
+
+        // --- Step 3: Embed and Store in Qdrant ---
+        console.log(`Storing in Qdrant collection: ${process.env.COLLECTION_NAME}`);
+
+         // Ready the client OpenAI Embedding Model
+         const embeddings = new GoogleGenerativeAIEmbeddings({
+            apiKey: process.env.GEMINI_API_KEY, // Use your Google API key
+            modelName: "embedding-001", // The model for Gemini embeddings
+    });
+
+        const vectorStore = await QdrantVectorStore.fromDocuments(chunks, embeddings, { 
+            url: process.env.QDRANT_URL,
+            collectionName: process.env.COLLECTION_NAME,
+  });
+
+        console.log("Raw text indexed successfully.");
+        return { 
+          success: true,
+          chunkCount: chunks.length 
+        };
+
+    } catch (error) {
+        console.error("Error occurred while indexing text:", error);
+        res.status(500).json({
+            message: "Text Indexing error",
+            error: error.message,
+        });
+    }
+}

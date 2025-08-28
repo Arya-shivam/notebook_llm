@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import { indexFile , websiteIndexing, YoutubeIndexing } from '../services/indexing.js';
+import { indexFile , websiteIndexing, YoutubeIndexing, textIndexing } from '../services/indexing.js';
 import { uploadToCloudinary } from '../services/Cloudinary.js';
 
 
@@ -103,9 +103,32 @@ const uploadYoutube = async (req, res) => {
 };
 
 
-const TextIndexing = async (req, res) => {};
+const uploadText = async (req, res) => {
+    const { text } = req.body;
+    if(!text){
+        return res.status(400).send("No text provided.");
+    }
+
+    try {
+        
+        console.log("Indexing raw text")
+        const result = await textIndexing(text);
+        console.log("Indexing done")
+
+        res.status(200).json({
+            message: "Text indexed successfully!",
+            collectionName:`Text stored in ${process.env.COLLECTION_NAME}`,
+            chunksCreated:result.chunkCount
+        });
+
+    } catch (error) {
+        console.error("Error indexing text:", error);
+        res.status(500).json({ error: "Failed to index text." });
+    }
+};
 
 export {uploadPdfFile,
         uploadWebsite,
         uploadYoutube,
+        uploadText
  };

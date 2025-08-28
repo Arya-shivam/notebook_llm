@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { uploadPdfFile , uploadWebsite, uploadYoutube} from "../controllers/uploadController.js"
+import { uploadPdfFile , uploadWebsite, uploadYoutube,uploadText } from "../controllers/uploadController.js"
 
 const router = Router();
 
@@ -13,7 +13,7 @@ const upload = multer({ storage: storage });
 router.post('/file', upload.single('document'), uploadPdfFile);
 router.post('/website',uploadWebsite);
 router.post('/ytube',uploadYoutube)
-// router.post('/text',TextIndexing)
+router.post('/text',uploadText)
 
 
 export default router;
