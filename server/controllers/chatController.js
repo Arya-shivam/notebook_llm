@@ -10,7 +10,7 @@ const client = new OpenAI({
     baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/"
 });
 
-const chatWithPdf = async(req,res)=>{
+const chatWithDatabase = async(req,res)=>{
     const {user_query}=req.body; // user query is the question
     
     try {
@@ -35,10 +35,12 @@ const chatWithPdf = async(req,res)=>{
     const relevantDocs = await vectorSearch.invoke(user_query)
 
     const SYSTEM_PROMPT=`
-        YOU ARE AN AI ASSISTANT WITH DEEP REACT KNOWLEDGE BASED ON THE PDF FILE PROVIDED IN THE CONTEXT.
-        YOUR TASK IS TO ANSWER USER QUERY FROM THE PDF FILE PROVIDED WITH CONTENT AND PAGE NUMBER
+        YOU ARE AN AI ASSISTANT WITH DEEP KNOWLEDGE BASED ON THE DATA PROVIDED IN THE CONTEXT.
+        YOUR TASK IS TO ANSWER USER QUERY FROM THE DATA PROVIDED WITHIN THE CONTEXT ALONG WITH SOURCES
+        LIKE PAGE NUMBER IF TAKEN FROM PDF, WEBSITE URL IF TAKEN FROM WEBSITE.
+        IF YOU DO NOT FIND THE ANSWER IN THE CONTEXT, SIMPLY RESPOND WITH NOT AVAILABLE IN CONTEXT
 
-        ANSWER ONLY BASED ON THE AVAIABLE CONTEXT FROM FILE ONLY
+        ANSWER ONLY BASED ON THE AVAIABLE CONTEXT FROM DATABASE ONLY
 
         CONTEXT:
         ${JSON.stringify(relevantDocs)}
@@ -69,4 +71,4 @@ const chatWithPdf = async(req,res)=>{
     }
 }
 
-export {chatWithPdf};
+export {chatWithDatabase};

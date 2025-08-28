@@ -1,6 +1,6 @@
 import { Router } from "express";
 import multer from "multer";
-import { uploadPdfFile , urlIndexing} from "../controllers/uploadController.js"
+import { uploadPdfFile , uploadWebsite, uploadYoutube} from "../controllers/uploadController.js"
 
 const router = Router();
 
@@ -11,8 +11,8 @@ const upload = multer({ storage: storage });
 
 // Route to handle file upload, indexing, and storage
 router.post('/file', upload.single('document'), uploadPdfFile);
-router.post('/website',urlIndexing);
-// router.post('/youtube',YoutubeIndexing)
+router.post('/website',uploadWebsite);
+router.post('/ytube',uploadYoutube)
 // router.post('/text',TextIndexing)
 
 

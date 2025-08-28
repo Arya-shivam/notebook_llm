@@ -1,8 +1,8 @@
 import { Router } from "express";
-import {chatWithPdf} from "../controllers/chatController.js";
+import {chatWithDatabase} from "../controllers/chatController.js";
 
 const router = Router();
 
-router.post("/message", chatWithPdf);
+router.post("/message", chatWithDatabase);
 
 export default router;
