@@ -36,7 +36,11 @@ export default function ChatInterface() {
       if (!response.ok) throw new Error('Failed to get response');
 
       const responseText = await response.text();
-      const aiMessage = { id: Date.now() + 1, role: 'assistant', content: responseText };
+      const aiMessage = { 
+        id: Date.now() + 1, 
+        role: 'assistant', 
+        content: responseText };
+        
       setMessages(prev => [...prev, aiMessage]);
     } catch (error) {
       console.error('Chat error:', error);

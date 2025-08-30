@@ -8,7 +8,8 @@ export async function POST(request) {
     }
 
     // Call your backend
-    const backendResponse = await fetch(`http://localhost:3000/upload/ytube?url=${encodeURIComponent(url)}`, {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const backendResponse = await fetch(`${API_URL}/upload/ytube?url=${encodeURIComponent(url)}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

@@ -6,7 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/componen
 import { Input } from "@/app/components/ui/input";
 import { Button } from "@/app/components/ui/button";
 import { Textarea } from "@/app/components/ui/textarea";
-import { UploadCloud, Link as LinkIcon, FileText, Youtube } from 'lucide-react';
+import { UploadCloud, Link as LinkIcon, FileText, Youtube, X } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 
 export default function AddSourceModal({ isOpen, setIsOpen }) {
@@ -130,8 +130,15 @@ export default function AddSourceModal({ isOpen, setIsOpen }) {
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
-      <DialogContent className="max-w-4xl w-[90vw] max-h-[90vh] overflow-y-auto glass-card border border-white/15">
-        <DialogHeader className="space-y-3 pb-6">
+      <DialogContent className="max-w-4xl w-[90vw]  backdrop-blur-lg max-h-[90vh] overflow-y-auto  border border-white/15">
+        <DialogHeader className="space-y-3 pb-6 relative">
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute right-0 top-0 rounded-sm opacity-70 ring-offset-background transition-opacity hover:opacity-100 focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:pointer-events-none text-white hover:text-gray-300"
+          >
+            <X className="h-4 w-4" />
+            <span className="sr-only">Close</span>
+          </button>
           <DialogTitle className="text-2xl font-semibold tracking-tight text-white">Add Sources</DialogTitle>
           <p className="text-sm text-gray-300">
             Upload files, index websites, or add text content to enhance your knowledge base
@@ -151,7 +158,7 @@ export default function AddSourceModal({ isOpen, setIsOpen }) {
                 onChange={handleFileUpload}
                 disabled={isUploading}
                 className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
-                accept=".pdf,.txt,.md,.mp3"
+                accept=".pdf,.txt,.md,.csv"
               />
               <div className="flex flex-col items-center justify-center p-12 border-2 border-dashed border-white/20 rounded-xl hover:border-indigo-400/50 transition-all duration-200 group-hover:bg-white/5">
                 <UploadCloud className={`h-16 w-16 mb-4 transition-colors ${isUploading ? 'text-gray-400 animate-pulse' : 'text-indigo-400 group-hover:text-indigo-300'}`} />

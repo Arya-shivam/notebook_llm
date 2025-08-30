@@ -10,11 +10,7 @@ const AppContext = createContext();
 // 2. Create a provider component
 export function AppProvider({ children }) {
   // State is now an array of source objects with an id, name, and checked status
-  const [sources, setSources] = useState([
-    // Adding some initial mock data for demonstration
-    { id: uuidv4(), name: 'dbms m-1.pdf', checked: true },
-    { id: uuidv4(), name: 'dbms m-2.pdf', checked: true },
-  ]);
+  const [sources, setSources] = useState([]);
 
   // Function to add a new source (e.g., from the UploadPanel)
   const addSource = (sourceData) => {

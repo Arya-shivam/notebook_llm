@@ -11,7 +11,8 @@ export async function POST(request) {
     }
 
     // Call your backend
-    const backendResponse = await fetch('http://localhost:3000/chat/message', {
+    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const backendResponse = await fetch(`${API_URL}/chat/message`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
