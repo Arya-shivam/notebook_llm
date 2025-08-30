@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/app/componen
 import { UploadCloud, Link as LinkIcon, FileText, Youtube, X } from 'lucide-react';
 
 export default function AddSourceModal({ isOpen, setIsOpen }) {
-  
+
   // These are placeholder functions for now
   const handleFileUpload = () => alert("File Upload clicked");
   const handleWebsite = () => alert("Website clicked");

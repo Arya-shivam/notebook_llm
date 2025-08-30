@@ -17,11 +17,12 @@ export function AppProvider({ children }) {
   ]);
 
   // Function to add a new source (e.g., from the UploadPanel)
-  const addSource = (sourceName) => {
+  const addSource = (sourceData) => {
     const newSource = {
-      id: uuidv4(), // Generate a unique ID
-      name: sourceName,
-      checked: true, // New sources are checked by default
+      id: sourceData.id || uuidv4(), // Use provided ID or generate a unique ID
+      name: sourceData.name || sourceData,
+      type: sourceData.type || 'unknown',
+      checked: sourceData.checked !== undefined ? sourceData.checked : true, // New sources are checked by default
     };
     setSources(prevSources => [...prevSources, newSource]);
   };
