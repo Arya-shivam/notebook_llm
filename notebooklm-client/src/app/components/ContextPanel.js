@@ -2,30 +2,20 @@
 "use client";
 
 import { useState } from 'react';
-import { Plus, Search, LayoutGrid, FileText } from 'lucide-react';
+import { Plus, Search, FileText } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import AddSourceModal from './AddSourceModal';
 
-import { Button } from "@/app/components/ui/button";
-import { Checkbox } from "@/app/components/ui/checkbox";
-import { Label } from "@/app/components/ui/label";
-
 const SourceItem = ({ name, checked, onChange }) => (
-  <div className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 w-full">
-      
-    <Label className="hover:bg-accent/50 flex w-full items-start gap-3 rounded-lg border p-3 has-[[aria-checked=true]]:border-blue-600 has-[[aria-checked=true]]:bg-blue-50 dark:has-[[aria-checked=true]]:border-blue-900 dark:has-[[aria-checked=true]]:bg-blue-950">
-        <Checkbox
-          id="toggle-2"
-          checked={checked}
-          onCheckedChange={onChange}
-          className="data-[state=checked]:border-blue-600 data-[state=checked]:bg-blue-600 data-[state=checked]:text-white dark:data-[state=checked]:border-blue-700 dark:data-[state=checked]:bg-blue-700"
-        />
-        <div className="grid gap-1.5 font-normal">
-          <p className="text-sm leading-none font-medium">
-            {name}
-          </p>
-        </div>
-      </Label>
+  <div className="flex items-center p-2 rounded-lg bg-white/20 hover:bg-white/30 transition-colors">
+    <FileText className="h-5 w-5 mr-3 text-red-400" />
+    <span className="flex-grow text-sm truncate">{name}</span>
+    <input
+      type="checkbox"
+      checked={checked}
+      onChange={onChange}
+      className="h-4 w-4 rounded bg-white/20 border-white/30 text-indigo-400 focus:ring-indigo-500"
+    />
   </div>
 );
 export default function ContextPanel() {
@@ -39,47 +29,55 @@ export default function ContextPanel() {
   const allChecked = sources.length > 0 && sources.every(s => s.checked);
 
   return (
-      <div className="flex flex-col border rounded-3xl p-4 h-full">
+    <div className="h-full flex flex-col rounded-xl glass-card">
       {/* Header */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="p-4 border-b border-white/10">
         <h2 className="text-xl font-semibold">Sources</h2>
-        <LayoutGrid className="h-6 w-6 text-white" />
       </div>
 
-      {/* Action Buttons */}
-      <div className="grid grid-cols-2 gap-2 mb-4">
-        <Button variant="outline" size="default" className=" rounded-lg col-span-1" onClick={() => setIsModalOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" /> Add
-        </Button>
-      
-        <Button variant="outline" size="default" className=" rounded-lg col-span-1">
-            <Search className="h-4 w-4 mr-2" /> Discover
-        </Button>
+      <div className="flex flex-col flex-grow p-4 space-y-4">
+        {/* Action Buttons */}
+        <div className="grid grid-cols-2 gap-2">
+          <button
+            onClick={() => setIsModalOpen(true)}
+            className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-white/10 hover:bg-white/20 transition-colors"
+          >
+            <Plus className="h-4 w-4 mr-2" />
+            Add
+          </button>
+          <button className="inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium h-10 px-4 py-2 bg-white/10 hover:bg-white/20 transition-colors">
+            <Search className="h-4 w-4 mr-2" />
+            Discover
+          </button>
+        </div>
 
-      </div>
-
-      {/* Select All */}
-      <div className="flex items-center justify-between p-2 mb-2">
-        <label htmlFor="selectAll" className="text-sm font-medium text-white">Select all sources</label>
-        <Checkbox
-          id="selectAll"
-          checked={allChecked}
-          onCheckedChange={(checked) => toggleSelectAll(checked)}
-        />
-      </div>
-
-      {/* Sources List */}
-      <div className="flex-grow space-y-1 overflow-y-auto rounded-lg p-3 ">
-        {sources.map(source => (
-          <SourceItem
-            key={source.id}
-            name={source.name}
-            checked={source.checked}
-            onChange={() => toggleSource(source.id)}
+        {/* Select All */}
+        <div className="flex items-center justify-between p-2">
+          <label className="text-sm font-medium text-gray-300">Select all sources</label>
+          <input
+            type="checkbox"
+            checked={allChecked}
+            onChange={(e) => toggleSelectAll(e.target.checked)}
+            className="h-4 w-4 rounded bg-white/20 border-white/30 text-indigo-400 focus:ring-indigo-500"
           />
-        ))}
+        </div>
+
+        {/* Sources List */}
+        <div className="flex-grow overflow-y-auto pr-2">
+          <div className="space-y-2">
+            {sources.map(source => (
+              <SourceItem
+                key={source.id}
+                name={source.name}
+                checked={source.checked}
+                onChange={() => toggleSource(source.id)}
+              />
+            ))}
+          </div>
+        </div>
       </div>
-       {/* RENDER THE MODAL: Pass the state and setter function as props */}
+
+      {/* RENDER THE MODAL: Pass the state and setter function as props */}
       <AddSourceModal isOpen={isModalOpen} setIsOpen={setIsModalOpen} />
     </div>
   );
