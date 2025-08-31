@@ -1,21 +1,14 @@
 import express from "express";
 import cors from "cors";
 import uploadRoute from "./routes/uploadRoute.js";
-import chatRoute from "./routes/chatRoute.js"
+import chatRoute from "./routes/chatRoute.js";
 const app = express()
 
 // Configure CORS for production
 const corsOptions = {
-  origin: [
-    'http://localhost:3000',
-    'http://localhost:3001',
-    /\.vercel\.app$/, // Allow all Vercel deployments
-    /\.localhost:3000$/, // Local development
-    'https://your-frontend-url.vercel.app' // Update this with your actual frontend URL
-  ],
+  origin: ['*'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
