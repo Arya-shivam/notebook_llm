@@ -26,7 +26,7 @@
     "@qdrant/js-client-rest": "^1.15.1",
     "cloudinary": "^2.7.0",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.1",
+    "dotenv": "^16.4.5",
     "express": "^5.1.0",
     "multer": "^2.0.2",
     "nodemon": "^3.1.10",
