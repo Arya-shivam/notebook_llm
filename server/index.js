@@ -9,10 +9,13 @@ const corsOptions = {
   origin: [
     'http://localhost:3000',
     'http://localhost:3001',
-    'https://your-frontend-url.vercel.app', // Update this with your actual Vercel URL
-    /\.vercel\.app$/ // Allow all Vercel preview deployments
+    /\.vercel\.app$/, // Allow all Vercel deployments
+    /\.localhost:3000$/, // Local development
+    'https://your-frontend-url.vercel.app' // Update this with your actual frontend URL
   ],
-  credentials: true
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
 
 app.use(cors(corsOptions));
@@ -27,8 +30,14 @@ app.use("/upload",uploadRoute);
 app.use("/chat",chatRoute)
 
 
-const PORT = process.env.PORT || 10000;
-app.listen(PORT, () => {
+const PORT = process.env.PORT || 3000;
+
+// For Vercel, we export the app instead of listening
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
-});
+  });
+}
+
+export default app;
 
