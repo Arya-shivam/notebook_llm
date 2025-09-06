@@ -87,7 +87,7 @@ const ThreadWelcome: FC = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 10 }}
-              className="aui-thread-welcome-message-motion-1 text-2xl font-semibold"
+              className="aui-thread-welcome-message-motion-1 text-4xl text-white font-semibold"
             >
               Hello there!
             </m.div>
@@ -109,7 +109,7 @@ const ThreadWelcome: FC = () => {
 
 const ThreadWelcomeSuggestions: FC = () => {
   return (
-    <div className="aui-thread-welcome-suggestions grid w-full gap-2 @md:grid-cols-2">
+    <div className="aui-thread-welcome-suggestions dark text-white grid w-full gap-2 @md:grid-cols-2">
       {[
         {
           title: "Explain React hooks",

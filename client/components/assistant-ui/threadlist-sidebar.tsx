@@ -24,7 +24,7 @@ export function ThreadListSidebar({
             <SidebarMenuItem>
               <SidebarMenuButton size="lg" asChild>
                 <Link
-                  href="https://assistant-ui.com"
+                  href="https://github.com/Arya-shivam/notebook_llm"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -33,7 +33,7 @@ export function ThreadListSidebar({
                   </div>
                   <div className="aui-sidebar-header-heading mr-6 flex flex-col gap-0.5 leading-none">
                     <span className="aui-sidebar-header-title font-semibold">
-                      assistant-ui
+                      NoteBook LLM
                     </span>
                   </div>
                 </Link>
@@ -51,7 +51,7 @@ export function ThreadListSidebar({
           <SidebarMenuItem>
             <SidebarMenuButton size="lg" asChild>
               <Link
-                href="https://github.com/assistant-ui/assistant-ui"
+                href="https://github.com/Arya-shivam/notebook_llm"
                 target="_blank"
               >
                 <div className="aui-sidebar-footer-icon-wrapper flex aspect-square size-8 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
@@ -59,9 +59,9 @@ export function ThreadListSidebar({
                 </div>
                 <div className="aui-sidebar-footer-heading flex flex-col gap-0.5 leading-none">
                   <span className="aui-sidebar-footer-title font-semibold">
-                    GitHub
+                    NoteBook LLM
                   </span>
-                  <span>View Source</span>
+                  <span>View Repo</span>
                 </div>
               </Link>
             </SidebarMenuButton>
